@@ -147,13 +147,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <div className="admin-main-content" style={{ marginLeft: 256 }}>
         <div className="container">
           <header className="page-header">
-            <h1>
+            {/* <h2>
               {location.pathname === "/admin"
                 ? "Dashboard"
                 : location.pathname.includes("/projects")
                 ? "Projects Management"
                 : "Responsables Management"}
-            </h1>
+            </h2> */}
           </header>
           <main>{children}</main>
         </div>

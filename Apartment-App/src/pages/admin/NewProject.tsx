@@ -442,7 +442,7 @@ const NewProject: React.FC = () => {
 
             {/* Gallery Images */}
             <label className="form-label">Gallery Images</label>
-            <div style={{ marginBottom: 18 }}>
+            <div>
               <div
                 {...getGalleryRootProps()}
                 style={{
@@ -508,6 +508,25 @@ const NewProject: React.FC = () => {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Responsable Selection */}
+            <div style={{ marginBottom: 18 }}>
+              <label className="form-label">Responsable</label>
+              <select
+                name="responsable"
+                value={formData.responsable}
+                onChange={handleChange}
+                required
+                className="form-select"
+              >
+                <option value="">Select a responsable</option>
+                {responsables.map((responsable) => (
+                  <option key={responsable._id} value={responsable._id}>
+                    {responsable.firstName} {responsable.lastName}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Features */}

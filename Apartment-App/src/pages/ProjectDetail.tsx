@@ -4,6 +4,18 @@ import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { 
+  MdSecurity,
+  MdSportsGymnastics,
+  MdPool,
+  MdChildCare,
+  MdRestaurant,
+  MdLocalCafe,
+  MdMosque,
+  MdShoppingBag,
+  MdPark,
+  MdLocalParking
+} from "react-icons/md";
 
 interface Project {
   _id: string;
@@ -345,27 +357,41 @@ const ProjectDetail: React.FC = () => {
             </div>
 
             {/* Features Section */}
-            <div>
+            <div className="mt-8">
               <h2 className="text-2xl font-bold mb-6">Équipements</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {Object.entries(project.features).map(
-                  ([key, value]) =>
-                    value && (
-                      <div key={key} className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <svg
-                            className="w-6 h-6 text-blue-600"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                          >
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                          </svg>
+                  ([key, value]) => {
+                    // Map feature keys to their corresponding icons
+                    const featureIcons: { [key: string]: JSX.Element | null } = {
+                      security: <MdSecurity className="w-6 h-6 text-blue-600" />,
+                      gym: <MdSportsGymnastics className="w-6 h-6 text-blue-600" />,
+                      swimmingPool: <MdPool className="w-6 h-6 text-blue-600" />,
+                      playground: <MdChildCare className="w-6 h-6 text-blue-600" />,
+                      restaurant: <MdRestaurant className="w-6 h-6 text-blue-600" />,
+                      cafe: <MdLocalCafe className="w-6 h-6 text-blue-600" />,
+                      mosque: <MdMosque className="w-6 h-6 text-blue-600" />,
+                      shoppingArea: <MdShoppingBag className="w-6 h-6 text-blue-600" />,
+                      greenSpaces: <MdPark className="w-6 h-6 text-blue-600" />,
+                      parking: <MdLocalParking className="w-6 h-6 text-blue-600" />
+                    };
+
+                    const icon = featureIcons[key];
+
+                    return (
+                      value && icon && (
+                        <div key={key} className="flex items-center gap-3">
+                          <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                            {/* Render the dynamic icon */}
+                            {icon}
+                          </div>
+                          <span className="text-gray-700">
+                            {key.replace(/([A-Z])/g, " $1").trim()}
+                          </span>
                         </div>
-                        <span className="text-gray-700">
-                          {key.replace(/([A-Z])/g, " $1").trim()}
-                        </span>
-                      </div>
-                    )
+                      )
+                    );
+                  }
                 )}
               </div>
             </div>

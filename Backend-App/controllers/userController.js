@@ -68,15 +68,14 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // Check if user is assigned to any projects
-  const projects = await Project.find({ responsable: req.params.id });
-  if (projects.length > 0) {
-    return next(
-      new ErrorResponse("Cannot delete user who is assigned to projects", 400)
-    );
-  }
+  // Delete all projects where this user is the responsable
+  await Project.updateMany(
+    { responsable: req.params.id },
+    { $unset: { responsable: 1 } }
+  );
 
-  await user.remove();
+  // Delete the user
+  await User.findByIdAndDelete(req.params.id);
   res.status(200).json({ success: true, data: {} });
 });
 

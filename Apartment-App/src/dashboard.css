@@ -89,7 +89,7 @@ body,
   margin: 40px auto;
   padding: 24px;
   max-width: 900px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
 }
 
 .main-table {

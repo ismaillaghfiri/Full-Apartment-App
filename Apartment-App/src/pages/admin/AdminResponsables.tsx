@@ -16,6 +16,13 @@ interface Responsable {
   profileImage?: {
     url: string;
   };
+  assignedProjects: Array<{
+    _id: string;
+    name: string;
+    city: string;
+    etat: string;
+  }>;
+  workingStatus: string;
 }
 
 const AdminResponsables: React.FC = () => {
@@ -67,7 +74,7 @@ const AdminResponsables: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="table-card">
+      <div style={{ padding: '20px' }}>
         <div
           style={{
             display: "flex",
@@ -89,15 +96,15 @@ const AdminResponsables: React.FC = () => {
         <div style={{ overflowX: "auto" }}>
           <table
             className="main-table"
-            style={{ tableLayout: "fixed", width: "100%" }}
+            style={{ tableLayout: "auto", width: "100%" }}
           >
             <thead>
               <tr>
                 <th style={{ width: 90 }}>Avatar</th>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>Assigned Projects</th>
                 <th>Role</th>
+                <th>Status</th>
                 <th style={{ width: 140 }}>Actions</th>
               </tr>
             </thead>
@@ -143,10 +150,73 @@ const AdminResponsables: React.FC = () => {
                   <td style={{ fontWeight: 500 }}>
                     {responsable.firstName} {responsable.lastName}
                   </td>
-                  <td>{responsable.email}</td>
-                  <td>{responsable.phone}</td>
+                  <td>
+                    {responsable.assignedProjects?.length > 0 ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        {responsable.assignedProjects.map((project) => (
+                          <div
+                            key={project._id}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: 2,
+                              fontSize: 14,
+                            }}
+                          >
+                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                              <span style={{ fontWeight: 500 }}>{project.name}</span>
+                              <span style={{ color: "#666" }}>({project.city})</span>
+                            </div>
+                            {/* <span
+                              style={{
+                                padding: "2px 8px",
+                                borderRadius: 12,
+                                fontSize: 12,
+                                width: "fit-content",
+                                background:
+                                  project.etat === "En Construction"
+                                    ? "#fef3c7"
+                                    : project.etat === "Pret et Ouvert"
+                                    ? "#d1fae5"
+                                    : "#e0e7ff",
+                                color:
+                                  project.etat === "En Construction"
+                                    ? "#92400e"
+                                    : project.etat === "Pret et Ouvert"
+                                    ? "#065f46"
+                                    : "#3730a3",
+                              }}
+                            >
+                              {project.etat}
+                            </span> */}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <span style={{ color: "#666", fontSize: 14 }}>No projects assigned</span>
+                    )}
+                  </td>
                   <td style={{ textTransform: "capitalize" }}>
                     {responsable.role}
+                  </td>
+                  <td>
+                    <span
+                      style={{
+                        padding: "4px 12px",
+                        borderRadius: 12,
+                        fontSize: 13,
+                        background:
+                          responsable.workingStatus === "Working"
+                            ? "#d1fae5"
+                            : "#f3f4f6",
+                        color:
+                          responsable.workingStatus === "Working"
+                            ? "#065f46"
+                            : "#4b5563",
+                      }}
+                    >
+                      {responsable.workingStatus}
+                    </span>
                   </td>
                   <td>
                     <div style={{ display: "flex", gap: 8 }}>

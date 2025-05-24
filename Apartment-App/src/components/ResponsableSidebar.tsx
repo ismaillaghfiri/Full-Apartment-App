@@ -38,8 +38,8 @@ const ResponsableSidebar: React.FC = () => {
                 : "text-gray-400 hover:bg-gray-800 hover:text-white"
             }`}
           >
-            <FaHome className="w-5 h-5 mr-3" />
-            <span>Dashboard</span>
+            {/* <FaHome className="w-5 h-5 mr-3" /> */}
+            {/* <span>Dashboard</span> */}
           </Link>
 
           <Link

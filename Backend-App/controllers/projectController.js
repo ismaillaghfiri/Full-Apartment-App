@@ -3,6 +3,7 @@ const User = require("../models/user");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middlewares/async");
 const cloudinary = require("cloudinary").v2;
+const Visit = require("../models/Visit");
 
 // Configure Cloudinary
 cloudinary.config({
@@ -336,13 +337,19 @@ exports.deleteProjectImage = asyncHandler(async (req, res) => {
 // Delete project with all its images
 exports.deleteProject = asyncHandler(async (req, res) => {
   try {
+    console.log("Starting project deletion for ID:", req.params.id);
+    
     const project = await Project.findById(req.params.id);
     if (!project) {
-      return res.status(404).json({ message: "Project not found" });
+      throw new ErrorResponse("Project not found", 404);
     }
 
+    console.log("Found project:", project._id);
+
     // Delete all images from Cloudinary
+    try {
     if (project.coverImage?.publicId) {
+        console.log("Deleting cover image from Cloudinary:", project.coverImage.publicId);
       await cloudinary.uploader.destroy(project.coverImage.publicId, {
         resource_type: "image",
       });
@@ -350,18 +357,51 @@ exports.deleteProject = asyncHandler(async (req, res) => {
 
     for (const image of project.gallery) {
       if (image.publicId) {
+          console.log("Deleting gallery image from Cloudinary:", image.publicId);
         await cloudinary.uploader.destroy(image.publicId, {
           resource_type: "image",
         });
       }
     }
+    } catch (cloudinaryError) {
+      console.error("Error deleting images from Cloudinary:", cloudinaryError);
+      // Continue with deletion even if Cloudinary fails
+    }
 
-    // Delete project from database
-    await project.deleteOne();
-    res.json({ message: "Project deleted successfully" });
+    // Remove project from responsable's assignedProjects
+    try {
+      if (project.responsable) {
+        console.log("Removing project from responsable:", project.responsable);
+        await User.findByIdAndUpdate(
+          project.responsable,
+          { $pull: { assignedProjects: project._id } }
+        );
+      }
+    } catch (userError) {
+      console.error("Error updating user:", userError);
+      // Continue with deletion even if user update fails
+    }
+
+    // Delete all visits associated with the project
+    try {
+      console.log("Deleting associated visits");
+      await Visit.deleteMany({ project: project._id });
+    } catch (visitError) {
+      console.error("Error deleting visits:", visitError);
+      // Continue with deletion even if visit deletion fails
+    }
+
+    // Finally, delete the project
+    console.log("Deleting project from database");
+    await Project.findByIdAndDelete(req.params.id);
+
+    res.json({ success: true, message: "Project deleted successfully" });
   } catch (error) {
-    console.error("Error deleting project:", error);
-    res.status(500).json({ message: "Error deleting project" });
+    console.error("Error in deleteProject:", error);
+    throw new ErrorResponse(
+      error.message || "Error deleting project",
+      error.statusCode || 500
+    );
   }
 });
 

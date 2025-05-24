@@ -281,8 +281,8 @@ const EditProject: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div>
-        <div className="form-card">
+      <div className="flex justify-center w-full">
+        <div className="form-card max-w-4xl w-full mx-4">
           <h1 className="form-title">Edit Project</h1>
           <form onSubmit={handleSubmit}>
             {error && <div className="form-error">{error}</div>}

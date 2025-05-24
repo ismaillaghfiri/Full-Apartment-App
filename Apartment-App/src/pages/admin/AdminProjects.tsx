@@ -68,7 +68,7 @@ const AdminProjects: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="table-card">
+      <div style={{ padding: '20px' }}>
         <div
           style={{
             display: "flex",
@@ -90,7 +90,7 @@ const AdminProjects: React.FC = () => {
         <div style={{ overflowX: "auto" }}>
           <table
             className="main-table"
-            style={{ tableLayout: "fixed", width: "100%" }}
+            style={{ tableLayout: "auto", width: "100%" }}
           >
             <thead>
               <tr>
