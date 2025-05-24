@@ -30,8 +30,9 @@ interface Project {
   coverImage: {
     url: string;
   };
-  galleryImages: Array<{
+  gallery: Array<{
     url: string;
+    publicId?: string;
   }>;
   features: {
     parking: boolean;
@@ -184,11 +185,11 @@ const ProjectDetail: React.FC = () => {
     ...(project.coverImage && project.coverImage.url
       ? [project.coverImage]
       : []),
-    ...(project.galleryImages && Array.isArray(project.galleryImages)
-      ? project.galleryImages
+    ...(project.gallery && Array.isArray(project.gallery)
+      ? project.gallery
       : []),
   ];
-  console.log("Gallery Images:", allImages);
+  console.log("Gallery Images for display:", allImages);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -296,21 +297,36 @@ const ProjectDetail: React.FC = () => {
                     </button>
                   </>
                 )}
+                {/* Indicator dots */}
                 <div className="flex justify-center mt-4 gap-2">
                   {allImages.map((img, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImage(index)}
-                      className={`w-3 h-3 rounded-full border-2 ${
-                        currentImage === index
-                          ? "bg-blue-600 border-blue-600"
-                          : "bg-gray-300 border-gray-400"
-                      }`}
+                      className={`w-3 h-3 rounded-full border-2 ${currentImage === index ? "bg-blue-600 border-blue-600" : "bg-gray-300 border-gray-400"}`}
                       aria-label={`Go to image ${index + 1}`}
                     />
                   ))}
                 </div>
               </div>
+
+              {/* Thumbnail Gallery */}
+              {allImages.length > 1 && (
+                <div className="mt-8">
+                  <h3 className="text-xl font-bold mb-4">Thumbnails</h3> {/* Optional title */}
+                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2"> {/* Responsive grid */}
+                    {allImages.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.url}
+                        alt={`Thumbnail ${index + 1}`}
+                        className={`w-full h-16 object-cover rounded-md cursor-pointer ${currentImage === index ? 'border-2 border-blue-600' : 'border border-transparent'}`}
+                        onClick={() => setCurrentImage(index)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Project Details */}
