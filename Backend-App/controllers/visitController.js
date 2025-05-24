@@ -82,8 +82,8 @@ exports.createVisit = asyncHandler(async (req, res) => {
       throw new ErrorResponse("Project not found", 404);
     }
 
-    // Check authorization
-    if (req.user.role === "responsable") {
+    // Check authorization only if req.user exists
+    if (req.user && req.user.role === "responsable") {
       if (!project.responsable || !project.responsable.equals(req.user._id)) {
         throw new ErrorResponse(
           "Not authorized to create visits for this project",

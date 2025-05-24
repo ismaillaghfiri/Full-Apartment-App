@@ -10,7 +10,7 @@ import Home from "./pages/public/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Projects from "./pages/projects/Projects";
-import ProjectDetails from "./pages/projects/ProjectDetails";
+import ProjectDetail from "./pages/ProjectDetail";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProjects from "./pages/admin/AdminProjects";
 import NewProject from "./pages/admin/NewProject";
@@ -66,7 +66,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/projects" element={<Projects />} />
-      <Route path="/projects/:id" element={<ProjectDetails />} />
+      <Route path="/projects/:id" element={<ProjectDetail />} />
 
       {/* Admin Routes */}
       <Route

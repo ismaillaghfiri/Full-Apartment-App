@@ -4,7 +4,7 @@ import dariLogo from "../../assets/images/dari-logo.png";
 const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-      <div className="container mx-auto px-4">
+      <div className=" mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">

@@ -1,0 +1,224 @@
+/* dashboard.css - shared for admin and responsable sections */
+
+body,
+.dashboard-root {
+  background: #f6f7fb;
+  color: #222;
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 32px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  background: #f9fafb;
+  color: #222;
+  transition: border 0.2s, background 0.2s;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: #2563eb;
+  background: #fff;
+  outline: none;
+}
+
+.form-label {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #2563eb;
+  color: #fff;
+  transition: background 0.2s;
+}
+.btn.secondary {
+  background: #e5e7eb;
+  color: #222;
+}
+.btn:hover {
+  background: #1d4ed8;
+}
+.btn.secondary:hover {
+  background: #d1d5db;
+}
+
+.table-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+  margin: 40px auto;
+  padding: 24px;
+  max-width: 900px;
+  overflow-x: auto;
+}
+
+.main-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.main-table th,
+.main-table td {
+  padding: 14px 12px;
+  text-align: left;
+}
+.main-table th {
+  background: #f3f4f6;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+}
+.main-table tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+.main-table tr:last-child {
+  border-bottom: none;
+}
+.main-table tr:hover {
+  background: #f1f5f9;
+}
+
+/* Error and success messages */
+.form-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.98rem;
+}
+.form-success {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.98rem;
+}
+
+/* Dark Theme */
+.dark-theme,
+.dark-theme body,
+.dark-theme .dashboard-root {
+  background: #181a20;
+  color: #f3f4f6;
+}
+.dark-theme .form-card,
+.dark-theme .table-card {
+  background: #23262f;
+  color: #f3f4f6;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+}
+.dark-theme .form-input,
+.dark-theme .form-select,
+.dark-theme .form-textarea {
+  background: #23262f;
+  color: #f3f4f6;
+  border: 1px solid #353945;
+}
+.dark-theme .form-input:focus,
+.dark-theme .form-select:focus,
+.dark-theme .form-textarea:focus {
+  background: #181a20;
+  border-color: #2563eb;
+}
+.dark-theme .btn {
+  background: #2563eb;
+  color: #fff;
+}
+.dark-theme .btn.secondary {
+  background: #353945;
+  color: #f3f4f6;
+}
+.dark-theme .btn:hover {
+  background: #1d4ed8;
+}
+.dark-theme .btn.secondary:hover {
+  background: #23262f;
+}
+.dark-theme .main-table th {
+  background: #23262f;
+  color: #bfc9da;
+}
+.dark-theme .main-table tr:hover {
+  background: #23262f;
+}
+.dark-theme .form-error {
+  background: #7f1d1d;
+  color: #fee2e2;
+}
+.dark-theme .form-success {
+  background: #065f46;
+  color: #d1fae5;
+}
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* or center for vertical centering */
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px 0;
+}
+
+.admin-main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  background: #f6f7fb;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+.page-header {
+  margin-bottom: 32px;
+  text-align: left;
+}

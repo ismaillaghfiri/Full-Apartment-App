@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import AdminLayout from "../../components/AdminLayout";
 import { FaEdit, FaTrash, FaPlus, FaBuilding } from "react-icons/fa";
+import "../../dashboard.css";
 
 interface Project {
   _id: string;
@@ -67,121 +68,127 @@ const AdminProjects: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold">Projects Management</h1>
-          <Link
-            to="/admin/projects/new"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700"
+      <div className="table-card">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 24,
+          }}
+        >
+          <h2 style={{ fontSize: "1.35rem", fontWeight: 600, margin: 0 }}>
+            Projects Management
+          </h2>
+          <button
+            onClick={() => (window.location.href = "/admin/projects/new")}
+            className="btn"
           >
-            <FaPlus /> Add New Project
-          </Link>
+            + New Project
+          </button>
         </div>
-
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div style={{ overflowX: "auto" }}>
+          <table
+            className="main-table"
+            style={{ tableLayout: "fixed", width: "100%" }}
+          >
+            <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Cover Image
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  City
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Type
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Price
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Number of Apartments
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Responsable
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+                <th style={{ width: 90 }}>Cover</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Units</th>
+                <th>Status</th>
+                <th>Responsable</th>
+                <th style={{ width: 120 }}>Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody>
               {projects.map((project) => (
-                <tr key={project._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
+                <tr key={project._id}>
+                  <td>
                     {project.coverImage?.url ? (
                       <img
                         src={project.coverImage.url}
                         alt={project.name}
-                        className="h-16 w-16 rounded-lg object-cover"
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: 6,
+                          objectFit: "cover",
+                        }}
                       />
                     ) : (
-                      <div className="h-16 w-16 rounded-lg bg-gray-200 flex items-center justify-center">
-                        <FaBuilding className="text-gray-400 text-2xl" />
+                      <div
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: 6,
+                          background: "#f3f4f6",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <span style={{ color: "#bbb", fontSize: 18 }}>—</span>
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
-                      {project.name}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 capitalize">
-                      {project.city}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{project.type}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {project.price.toLocaleString()} DH
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {project.numberOfApartments}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td style={{ fontWeight: 500 }}>{project.name}</td>
+                  <td>{project.city}</td>
+                  <td>{project.type}</td>
+                  <td>{project.price.toLocaleString()} DH</td>
+                  <td>{project.numberOfApartments}</td>
+                  <td>
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        project.etat === "En Construction"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : project.etat === "Pret et Ouvert"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
+                      style={{
+                        display: "inline-block",
+                        padding: "2px 10px",
+                        borderRadius: 12,
+                        fontSize: 13,
+                        background:
+                          project.etat === "En Construction"
+                            ? "#fef3c7"
+                            : project.etat === "Pret et Ouvert"
+                            ? "#d1fae5"
+                            : "#fee2e2",
+                        color:
+                          project.etat === "En Construction"
+                            ? "#b45309"
+                            : project.etat === "Pret et Ouvert"
+                            ? "#065f46"
+                            : "#b91c1c",
+                      }}
                     >
                       {project.etat}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {project.responsable?.firstName}{" "}
-                      {project.responsable?.lastName}
-                    </div>
+                  <td>
+                    {project.responsable ? (
+                      `${project.responsable.firstName} ${project.responsable.lastName}`
+                    ) : (
+                      <span style={{ color: "#bbb" }}>—</span>
+                    )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex gap-2">
-                      <Link
-                        to={`/admin/projects/${project._id}/edit`}
-                        className="text-blue-600 hover:text-blue-900"
+                  <td>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button
+                        onClick={() =>
+                          (window.location.href = `/admin/projects/${project._id}/edit`)
+                        }
+                        className="btn"
+                        style={{ padding: "6px 14px", fontSize: 14 }}
                       >
-                        <FaEdit />
-                      </Link>
+                        Edit
+                      </button>
                       <button
                         onClick={() => handleDelete(project._id)}
-                        className="text-red-600 hover:text-red-900"
+                        className="btn secondary"
+                        style={{ padding: "6px 14px", fontSize: 14 }}
                       >
-                        <FaTrash />
+                        Delete
                       </button>
                     </div>
                   </td>
@@ -189,6 +196,11 @@ const AdminProjects: React.FC = () => {
               ))}
             </tbody>
           </table>
+          {projects.length === 0 && (
+            <div style={{ textAlign: "center", color: "#888", padding: 32 }}>
+              No projects found.
+            </div>
+          )}
         </div>
       </div>
     </AdminLayout>

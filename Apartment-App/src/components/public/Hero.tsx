@@ -2,7 +2,7 @@ import heroImage from "../../assets/images/herosection-bg.jpg";
 
 const Hero = () => {
   return (
-    <div className="relative h-screen w-full">
+    <div className=" h-screen w-full">
       {/* Background Image */}
       <div
         className="absolute inset-0 w-full h-full"

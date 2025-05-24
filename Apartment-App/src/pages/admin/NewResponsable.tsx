@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AdminLayout from "../../components/AdminLayout";
+import "../../dashboard.css";
 
 interface ResponsableFormData {
   firstName: string;
@@ -99,124 +100,96 @@ const NewResponsable: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-2xl font-semibold mb-6">Add New Responsable</h1>
-          <div className="bg-white rounded-lg shadow p-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <div className="bg-red-50 text-red-500 p-4 rounded-md">
-                  {error}
-                </div>
-              )}
+      <div>
+        <div className="form-card">
+          <h1 className="form-title">Add New Responsable</h1>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="form-error">{error}</div>}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
+            <div style={{ display: "flex", gap: 16 }}>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">First Name</label>
                 <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-input"
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Last Name</label>
                 <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
                   onChange={handleChange}
                   required
-                  minLength={6}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-input"
                 />
               </div>
+            </div>
 
-              <div className="flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={() => navigate("/admin/responsables")}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
-                >
-                  {loading ? "Creating..." : "Create Responsable"}
-                </button>
+            <div style={{ display: "flex", gap: 16 }}>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
               </div>
-            </form>
-          </div>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Phone Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
+              </div>
+            </div>
+
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength={6}
+              className="form-input"
+            />
+
+            <div className="form-actions">
+              <button
+                type="button"
+                onClick={() => navigate("/admin/responsables")}
+                className="btn secondary"
+              >
+                Cancel
+              </button>
+              <button type="submit" disabled={loading} className="btn">
+                {loading ? "Creating..." : "Create Responsable"}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </AdminLayout>

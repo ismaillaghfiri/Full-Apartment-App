@@ -131,9 +131,9 @@ const Projects: React.FC = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50">
           <div className="container mx-auto px-4 h-full flex flex-col justify-center">
-            <h1 className="text-4xl md:text-5xl text-white font-bold mb-8">
+            {/* <h1 className="text-4xl md:text-5xl text-white font-bold mb-8 ">
               Find Your Perfect Home
-            </h1>
+            </h1> */}
 
             {/* Search Form */}
             <form
@@ -197,7 +197,7 @@ const Projects: React.FC = () => {
       </div>
 
       {/* Projects Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div className=" mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-12">Our Projects</h2>
         <div className="mb-8 text-center">
           {filteredProjects.length > 0 && (

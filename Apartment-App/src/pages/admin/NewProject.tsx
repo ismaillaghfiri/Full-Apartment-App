@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import AdminLayout from "../../components/AdminLayout";
+import "../../dashboard.css";
 
 interface Responsable {
   _id: string;
@@ -301,129 +302,117 @@ const NewProject: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">Create New Project</h1>
-        <div className="bg-white rounded-lg shadow p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Project Name
-                </label>
+      <div>
+        <div className="form-card">
+          <h1 className="form-title">Create New Project</h1>
+          <form onSubmit={handleSubmit}>
+            {error && <div className="form-error">{error}</div>}
+
+            <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Project Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-input"
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  City
-                </label>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">City</label>
                 <input
                   type="text"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-input"
                 />
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Type
-                </label>
+            <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Type</label>
                 <select
                   name="type"
                   value={formData.type}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-select"
                 >
                   <option value="">Select Type</option>
-                  <option value="Eco-Standing">Eco-Standing</option>
                   <option value="Moyen-Standing">Moyen-Standing</option>
                   <option value="Haut-Standing">Haut-Standing</option>
+                  <option value="Economique">Economique</option>
                 </select>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Price
-                </label>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Price (DH)</label>
                 <input
                   type="number"
                   name="price"
                   value={formData.price}
                   onChange={handleChange}
                   required
-                  min="0"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-input"
                 />
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Number of Apartments
-                </label>
+            <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Number of Apartments</label>
                 <input
                   type="number"
                   name="numberOfApartments"
                   value={formData.numberOfApartments}
                   onChange={handleChange}
                   required
-                  min="0"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-input"
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Status
-                </label>
+              <div style={{ flex: 1 }}>
+                <label className="form-label">Status</label>
                 <select
                   name="etat"
                   value={formData.etat}
                   onChange={handleChange}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="form-select"
                 >
+                  <option value="">Select Status</option>
                   <option value="En Construction">En Construction</option>
                   <option value="Pret et Ouvert">Pret et Ouvert</option>
-                  <option value="Fermer">Fermer</option>
+                  <option value="Termine">Termine</option>
                 </select>
               </div>
             </div>
 
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Description
-              </label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+            <label className="form-label">Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              className="form-textarea"
+            />
 
             {/* Cover Image Upload */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Cover Image
-              </label>
+            <label className="form-label">Cover Image</label>
+            <div style={{ marginBottom: 18 }}>
               <div
                 {...getCoverRootProps()}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500"
+                style={{
+                  border: "2px dashed #d1d5db",
+                  borderRadius: 8,
+                  padding: 24,
+                  textAlign: "center",
+                  cursor: "pointer",
+                  background: "#f9fafb",
+                }}
               >
                 <input {...getCoverInputProps()} />
                 {formData.coverImage ? (
@@ -431,42 +420,65 @@ const NewProject: React.FC = () => {
                     <img
                       src={formData.coverImage.url}
                       alt="Cover"
-                      className="mx-auto h-40 object-cover rounded"
+                      style={{
+                        display: "block",
+                        margin: "0 auto",
+                        height: 120,
+                        objectFit: "cover",
+                        borderRadius: 8,
+                      }}
                     />
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p style={{ marginTop: 8, color: "#666", fontSize: 14 }}>
                       Click or drag to replace
                     </p>
                   </div>
                 ) : (
-                  <p className="text-gray-600">
+                  <p style={{ color: "#666", fontSize: 14 }}>
                     Drag and drop a cover image, or click to select
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Gallery Upload */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Gallery Images
-              </label>
+            {/* Gallery Images */}
+            <label className="form-label">Gallery Images</label>
+            <div style={{ marginBottom: 18 }}>
               <div
                 {...getGalleryRootProps()}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500"
+                style={{
+                  border: "2px dashed #d1d5db",
+                  borderRadius: 8,
+                  padding: 24,
+                  textAlign: "center",
+                  cursor: "pointer",
+                  background: "#f9fafb",
+                }}
               >
                 <input {...getGalleryInputProps()} />
-                <p className="text-gray-600">
+                <p style={{ color: "#666", fontSize: 14 }}>
                   Drag and drop gallery images, or click to select
                 </p>
               </div>
               {formData.gallery.length > 0 && (
-                <div className="mt-4 grid grid-cols-3 gap-4">
+                <div
+                  style={{
+                    marginTop: 16,
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: 12,
+                  }}
+                >
                   {formData.gallery.map((image, index) => (
-                    <div key={index} className="relative">
+                    <div key={index} style={{ position: "relative" }}>
                       <img
                         src={image.url}
                         alt={`Gallery ${index + 1}`}
-                        className="h-24 w-full object-cover rounded"
+                        style={{
+                          height: 64,
+                          width: "100%",
+                          objectFit: "cover",
+                          borderRadius: 8,
+                        }}
                       />
                       <button
                         type="button"
@@ -476,7 +488,19 @@ const NewProject: React.FC = () => {
                             gallery: prev.gallery.filter((_, i) => i !== index),
                           }));
                         }}
-                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full transform translate-x-1/2 -translate-y-1/2"
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          right: 0,
+                          background: "#ef4444",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "50%",
+                          width: 24,
+                          height: 24,
+                          cursor: "pointer",
+                          transform: "translate(50%, -50%)",
+                        }}
                       >
                         ×
                       </button>
@@ -487,78 +511,51 @@ const NewProject: React.FC = () => {
             </div>
 
             {/* Features */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-4">
-                Features
-              </label>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {Object.entries(formData.features).map(([key, value]) => (
-                  <div key={key} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={key}
-                      name={key}
-                      checked={value}
-                      onChange={handleChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor={key}
-                      className="ml-2 text-sm text-gray-700 capitalize"
-                    >
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </label>
-                  </div>
-                ))}
-              </div>
+            <label className="form-label">Features</label>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: 12,
+                marginBottom: 18,
+              }}
+            >
+              {Object.entries(formData.features).map(([key, value]) => (
+                <div
+                  key={key}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <input
+                    type="checkbox"
+                    id={key}
+                    name={key}
+                    checked={value}
+                    onChange={handleChange}
+                    className="form-input"
+                    style={{ width: 18, height: 18, marginRight: 8 }}
+                  />
+                  <label
+                    htmlFor={key}
+                    style={{ textTransform: "capitalize", fontSize: 15 }}
+                  >
+                    {key.replace(/([A-Z])/g, " $1").trim()}
+                  </label>
+                </div>
+              ))}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Project Responsable
-              </label>
-              <select
-                name="responsable"
-                value={formData.responsable}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              >
-                <option value="">Select a responsable</option>
-                {responsables.map((resp) => (
-                  <option key={resp._id} value={resp._id}>
-                    {resp.firstName} {resp.lastName} ({resp.email})
-                  </option>
-                ))}
-              </select>
-              {responsables.length === 0 && (
-                <p className="mt-2 text-sm text-yellow-600">
-                  No responsables available. Please create a responsable first.
-                </p>
-              )}
-            </div>
-
-            {error && (
-              <div
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-                role="alert"
-              >
-                <span className="block sm:inline">{error}</span>
-              </div>
-            )}
-
-            <div className="flex justify-end space-x-4">
+            <div className="form-actions">
               <button
                 type="button"
                 onClick={() => navigate("/admin/projects")}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="btn secondary"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading || uploadingImages}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                className="btn"
               >
                 {loading
                   ? "Creating..."

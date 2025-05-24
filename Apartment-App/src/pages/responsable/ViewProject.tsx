@@ -159,10 +159,10 @@ const ViewProject: React.FC = () => {
   if (!project || !formData) return <div>Project not found</div>;
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100">
       <ResponsableSidebar />
-      <div className="flex-1 ml-64">
-        <div className="py-6 px-8">
+      <div className="py-6 px-8 flex justify-center w-full">
+        <div className="bg-white rounded-lg shadow p-6 mx-auto max-w-lg w-full">
           <div className="mb-6 flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-gray-900">
               Edit Project

@@ -3,6 +3,7 @@ import axios from "axios";
 import AdminLayout from "../../components/AdminLayout";
 import { FaUser, FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import "../../dashboard.css";
 
 interface Responsable {
   _id: string;
@@ -66,130 +67,116 @@ const AdminResponsables: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="p-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              Responsables Management
-            </h1>
-            <p className="mt-2 text-gray-600">
-              Manage all your responsables in one place
-            </p>
-          </div>
-          <Link
-            to="/admin/responsables/new"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg text-sm font-medium shadow-sm transition-all duration-150 ease-in-out flex items-center gap-2"
+      <div className="table-card">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 24,
+          }}
+        >
+          <h2 style={{ fontSize: "1.35rem", fontWeight: 600, margin: 0 }}>
+            Responsables Management
+          </h2>
+          <button
+            onClick={() => (window.location.href = "/admin/responsables/new")}
+            className="btn"
           >
-            Add New Responsable
-          </Link>
+            + New Responsable
+          </button>
         </div>
-
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Phone
-                  </th>
-                  <th className="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Role
-                  </th>
-                  <th className="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
-                {responsables.map((responsable) => (
-                  <tr
-                    key={responsable._id}
-                    className="hover:bg-gray-50 transition-colors duration-150 ease-in-out"
-                  >
-                    <td className="px-8 py-5 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center mr-4">
-                          {responsable.profileImage?.url ? (
-                            <img
-                              src={responsable.profileImage.url}
-                              alt={`${responsable.firstName} ${responsable.lastName}`}
-                              className="h-12 w-12 rounded-full object-cover"
-                            />
-                          ) : (
-                            <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                              <FaUser size={20} color="#3B82F6" />
-                            </div>
-                          )}
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {responsable.firstName} {responsable.lastName}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-8 py-5 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {responsable.email}
-                      </div>
-                    </td>
-                    <td className="px-8 py-5 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {responsable.phone}
-                      </div>
-                    </td>
-                    <td className="px-8 py-5 whitespace-nowrap">
-                      <div className="text-sm text-gray-900 capitalize">
-                        {responsable.role}
-                      </div>
-                    </td>
-                    <td className="px-8 py-5 whitespace-nowrap">
-                      <span
-                        className={`px-4 py-2 inline-flex text-sm font-semibold rounded-full ${
-                          responsable.status === "active"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
+        <div style={{ overflowX: "auto" }}>
+          <table
+            className="main-table"
+            style={{ tableLayout: "fixed", width: "100%" }}
+          >
+            <thead>
+              <tr>
+                <th style={{ width: 90 }}>Avatar</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th style={{ width: 140 }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {responsables.map((responsable) => (
+                <tr key={responsable._id}>
+                  <td>
+                    {responsable.profileImage?.url ? (
+                      <img
+                        src={responsable.profileImage.url}
+                        alt={`${responsable.firstName} ${responsable.lastName}`}
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: "50%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          height: 40,
+                          width: 40,
+                          borderRadius: "50%",
+                          background: "#e0e7ef",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
                       >
-                        {responsable.status}
-                      </span>
-                    </td>
-                    <td className="px-8 py-5 whitespace-nowrap">
-                      <div className="flex gap-3">
-                        <Link
-                          to={`/admin/responsables/${responsable._id}/edit`}
-                          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all duration-150 ease-in-out inline-flex items-center"
+                        <span
+                          style={{
+                            color: "#2563eb",
+                            fontWeight: 700,
+                            fontSize: 18,
+                          }}
                         >
-                          <div className="mr-2">
-                            <FaEdit size={16} />
-                          </div>
-                          Edit
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(responsable._id)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-all duration-150 ease-in-out inline-flex items-center"
-                        >
-                          <div className="mr-2">
-                            <FaTrash size={16} />
-                          </div>
-                          Delete
-                        </button>
+                          {responsable.firstName[0]}
+                        </span>
                       </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    )}
+                  </td>
+                  <td style={{ fontWeight: 500 }}>
+                    {responsable.firstName} {responsable.lastName}
+                  </td>
+                  <td>{responsable.email}</td>
+                  <td>{responsable.phone}</td>
+                  <td style={{ textTransform: "capitalize" }}>
+                    {responsable.role}
+                  </td>
+                  <td>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button
+                        onClick={() =>
+                          (window.location.href = `/admin/responsables/${responsable._id}/edit`)
+                        }
+                        className="btn"
+                        style={{ padding: "6px 14px", fontSize: 14 }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(responsable._id)}
+                        className="btn secondary"
+                        style={{ padding: "6px 14px", fontSize: 14 }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {responsables.length === 0 && (
+            <div style={{ textAlign: "center", color: "#888", padding: 32 }}>
+              No responsables found.
+            </div>
+          )}
         </div>
       </div>
     </AdminLayout>
