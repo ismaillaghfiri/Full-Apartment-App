@@ -25,6 +25,9 @@ import ResponsableVisits from "./pages/responsable/ResponsableVisits";
 import { useAuth } from "./contexts/AuthContext";
 import NewVisit from "./pages/responsable/NewVisit";
 import EditVisit from "./pages/responsable/EditVisit";
+import Categories from "./pages/Categories";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 
 const App = () => {
   return (
@@ -67,6 +70,9 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/projects" element={<Projects />} />
       <Route path="/projects/:id" element={<ProjectDetail />} />
+      <Route path="/categories" element={<Categories />} />
+      <Route path="/about" element={<AboutUs />} />
+      <Route path="/contact" element={<Contact />} />
 
       {/* Admin Routes */}
       <Route
