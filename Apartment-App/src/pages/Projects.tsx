@@ -180,7 +180,7 @@ const Projects = () => {
                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   >
                     <option value="">All Types</option>
-                    <option value="economic">Economic</option>
+                    <option value="economic">Economic Standing</option>
                     <option value="medium">Medium Standing</option>
                     <option value="high">High Standing</option>
                   </select>
