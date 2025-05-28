@@ -231,15 +231,10 @@ const EditProject: React.FC = () => {
         return;
       }
 
-      const response = await axios.put(
-        `http://localhost:5000/api/projects/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.put(`http://localhost:5000/api/projects/${id}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
       navigate("/admin/projects");
     } catch (error: any) {
       if (error.response?.status === 401) {
@@ -410,6 +405,7 @@ const EditProject: React.FC = () => {
                     <button
                       type="button"
                       onClick={() =>
+                        formData.coverImage &&
                         handleDeleteImage(formData.coverImage.publicId, false)
                       }
                       style={{
@@ -424,6 +420,12 @@ const EditProject: React.FC = () => {
                         height: 24,
                         cursor: "pointer",
                         transform: "translate(50%, -50%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "16px",
+                        lineHeight: 1,
+                        padding: 0,
                       }}
                     >
                       ×
@@ -495,6 +497,12 @@ const EditProject: React.FC = () => {
                           height: 24,
                           cursor: "pointer",
                           transform: "translate(50%, -50%)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "16px",
+                          lineHeight: 1,
+                          padding: 0,
                         }}
                       >
                         ×
@@ -552,7 +560,7 @@ const EditProject: React.FC = () => {
               <option value="">Select a responsable</option>
               {responsables.map((resp) => (
                 <option key={resp._id} value={resp._id}>
-                  {resp.firstName} {resp.lastName} ({resp.email})
+                  {resp.firstName} {resp.lastName}
                 </option>
               ))}
             </select>

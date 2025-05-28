@@ -4,20 +4,6 @@ import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import ResponsableSidebar from "../../components/ResponsableSidebar";
 
-interface Visit {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  date: string;
-  status: string;
-  project: {
-    _id: string;
-    name: string;
-    city: string;
-  };
-}
 
 interface Project {
   _id: string;

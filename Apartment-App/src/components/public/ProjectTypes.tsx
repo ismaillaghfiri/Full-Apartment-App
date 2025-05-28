@@ -11,10 +11,10 @@ const ProjectTypes = () => {
     },
     {
       id: 2,
-      name: "Hout-Standing",
+      name: "Haut-Standing",
       image:
         "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=853&q=80",
-      link: "/projects?type=hout-standing",
+      link: "/projects?type=haut-standing",
     },
     {
       id: 3,
@@ -28,27 +28,24 @@ const ProjectTypes = () => {
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
-        {/* Section Title */}
+        
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-2">Our Projects</h2>
           <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
         </div>
 
-        {/* Project Types Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projectTypes.map((type) => (
             <div
               key={type.id}
               className="relative group overflow-hidden rounded-lg shadow-lg"
             >
-              {/* Image */}
               <img
                 src={type.image}
                 alt={type.name}
                 className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
               />
 
-              {/* Content Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
                 <div className="p-6 w-full flex justify-between items-center">
                   <h3 className="text-white text-xl font-semibold">

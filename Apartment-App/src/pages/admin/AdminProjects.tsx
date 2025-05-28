@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import AdminLayout from "../../components/AdminLayout";
-import { FaEdit, FaTrash, FaPlus, FaBuilding } from "react-icons/fa";
 import "../../dashboard.css";
 
 interface Project {
@@ -68,7 +66,7 @@ const AdminProjects: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: "20px" }}>
         <div
           style={{
             display: "flex",
@@ -185,7 +183,7 @@ const AdminProjects: React.FC = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(project._id)}
-                        className="btn secondary"
+                        className="btn bg-red-500"
                         style={{ padding: "6px 14px", fontSize: 14 }}
                       >
                         Delete

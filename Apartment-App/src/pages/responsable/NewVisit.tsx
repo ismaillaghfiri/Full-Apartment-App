@@ -72,9 +72,10 @@ const NewVisit: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto  p-6">
-      <div className="flex justify-center">
-        <div className="bg-white rounded-lg shadow p-6 mx-auto max-w-lg w-full">
+    <div className="flex h-screen bg-gray-100">
+      <ResponsableSidebar />
+      <div className="flex-1 flex items-center justify-center p-6 ml-64">
+        <div className="bg-white rounded-lg shadow p-6 w-full max-w-lg">
           <h1 className="text-2xl font-bold mb-6">New Visit</h1>
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <form onSubmit={handleSubmit} className="space-y-4">

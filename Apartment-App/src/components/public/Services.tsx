@@ -1,6 +1,4 @@
-import wideSelection from "../../assets/images/services-images/wide-selection.jpg";
-import transparentInfo from "../../assets/images/services-images/transparent-info.jpg";
-import easyBooking from "../../assets/images/services-images/easy-booking.jpg";
+
 
 const Services = () => {
   const services = [
@@ -33,27 +31,23 @@ const Services = () => {
   return (
     <section className="py-20 bg-gray-50">
       <div className=" mx-auto px-4">
-        {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-2">Our Services</h2>
           <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
         </div>
 
-        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
             <div
               key={service.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
             >
-              {/* Service Image */}
               <img
                 src={service.image}
                 alt={service.title}
                 className="w-full h-48 object-cover"
               />
 
-              {/* Service Content */}
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>

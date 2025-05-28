@@ -15,21 +15,21 @@ const AdminDashboard: React.FC = () => {
         const token = localStorage.getItem("token");
         const headers = { Authorization: `Bearer ${token}` };
 
-        // Fetch total projects count
+       
         const projectsCountResponse = await axios.get(
           "http://localhost:5000/api/projects/count",
           { headers }
         );
         setProjectCount(projectsCountResponse.data.count);
 
-        // Fetch responsables and count them
+        
         const responsablesResponse = await axios.get(
           "http://localhost:5000/api/users/responsables",
           { headers }
         );
         setResponsableCount(responsablesResponse.data.length);
 
-        // Fetch all projects to count active ones
+        
         const allProjectsResponse = await axios.get(
           "http://localhost:5000/api/projects",
           { headers }

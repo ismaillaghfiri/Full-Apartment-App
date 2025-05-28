@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useSearchParams } from "react-router-dom";
 import Navbar from "../../components/public/Navbar";
-import Footer from "../../components/Footer";
+import Footer from "../../components/public/Footer";
 import projectsBg from "../../assets/images/projects-bg.jpg";
 
 interface Project {
@@ -47,9 +47,10 @@ const Projects: React.FC = () => {
   const fetchProjects = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/projects");
-      console.log("Fetched projects:", response.data); // Debug log
+      console.log("Fetched projects:", response.data); 
       setProjects(response.data);
-      // Apply filters immediately after fetching projects
+
+      
       if (filters.type || filters.location || filters.priceRange) {
         filterProjects();
       } else {
@@ -64,10 +65,8 @@ const Projects: React.FC = () => {
 
   const filterProjects = () => {
     let filtered = [...projects];
-    console.log("Current filters:", filters); // Debug log
-    console.log("Projects before filtering:", filtered); // Debug log
 
-    // Filter by location
+    
     if (filters.location) {
       filtered = filtered.filter(
         (project) =>
@@ -75,20 +74,13 @@ const Projects: React.FC = () => {
       );
     }
 
-    // Filter by type
     if (filters.type) {
       filtered = filtered.filter((project) => {
-        console.log(
-          "Project type:",
-          project.type,
-          "Filter type:",
-          filters.type
-        ); // Debug log
         return project.type.toLowerCase() === filters.type.toLowerCase();
       });
     }
 
-    // Filter by price range
+    
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split("-").map(Number);
       filtered = filtered.filter((project) => {
@@ -99,14 +91,11 @@ const Projects: React.FC = () => {
         }
       });
     }
-
-    console.log("Filtered projects:", filtered); // Debug log
     setFilteredProjects(filtered);
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Update URL parameters
     const params = new URLSearchParams();
     if (filters.location) params.set("location", filters.location);
     if (filters.type) params.set("type", filters.type);
@@ -124,7 +113,7 @@ const Projects: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="pt-20">
-        {/* Hero Section with Search */}
+        {/* Hero Section */}
         <div
           className="relative h-[500px] bg-cover bg-center"
           style={{ backgroundImage: `url(${projectsBg})` }}
@@ -135,7 +124,7 @@ const Projects: React.FC = () => {
                 Find Your Perfect Home
               </h1>
 
-              {/* Search Form */}
+              {/* the filter */}
               <form
                 onSubmit={handleSearch}
                 className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto w-full"
@@ -154,6 +143,9 @@ const Projects: React.FC = () => {
                       <option value="TANGER">Tanger</option>
                       <option value="MARRAKECH">Marrakech</option>
                       <option value="TEMARA">Temara</option>
+                      <option value="TANTAN">Tantan</option>
+                      <option value="CASABLANCA">Casablanca</option>
+                      <option value="MARTIL">Martil</option>
                     </select>
                   </div>
                   <div>
@@ -177,7 +169,7 @@ const Projects: React.FC = () => {
                       className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="">Price Range</option>
-                      <option value="25000-500000">25,000 - 500,000 DH</option>
+                      <option value="250000-500000">250,000 - 500,000 DH</option>
                       <option value="500000-1000000">
                         500,000 - 1,000,000 DH
                       </option>
@@ -196,7 +188,7 @@ const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Projects Section */}
+        {/* Projects List */}
         <div className="mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold text-center mb-12">Our Projects</h2>
           <div className="mb-8 text-center">

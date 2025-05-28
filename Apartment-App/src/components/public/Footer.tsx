@@ -40,7 +40,7 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className=" mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Company Info */}
+          
           <div>
             <img src={dariLogo} alt="Dari Logo" className="h-12 mb-4" />
             <p className="text-gray-400 mb-4">
@@ -60,8 +60,6 @@ const Footer = () => {
               ))}
             </div>
           </div>
-
-          {/* Navigation */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Navigation</h3>
             <ul className="space-y-2">
@@ -87,8 +85,6 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
-          {/* Featured Locations */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Featured Locations</h3>
             <ul className="space-y-2">
@@ -135,7 +131,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h3 className="text-lg font-semibold mb-4">
               Subscribe to Our Newsletter
@@ -159,7 +154,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8">
           <p className="text-center text-gray-400">
             © {new Date().getFullYear()} Dari. All rights reserved.

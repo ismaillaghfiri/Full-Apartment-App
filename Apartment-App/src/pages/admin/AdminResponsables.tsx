@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminLayout from "../../components/AdminLayout";
-import { FaUser, FaEdit, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import "../../dashboard.css";
 
 interface Responsable {
@@ -231,7 +229,7 @@ const AdminResponsables: React.FC = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(responsable._id)}
-                        className="btn secondary"
+                        className="btn bg-red-500"
                         style={{ padding: "6px 14px", fontSize: 14 }}
                       >
                         Delete
