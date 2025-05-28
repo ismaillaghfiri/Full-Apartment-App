@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { 
+import Navbar from "./../components/public/Navbar";
+import Footer from "./../components/public/Footer";
+import {
   MdSecurity,
   MdSportsGymnastics,
   MdPool,
@@ -14,7 +14,7 @@ import {
   MdMosque,
   MdShoppingBag,
   MdPark,
-  MdLocalParking
+  MdLocalParking,
 } from "react-icons/md";
 
 interface Project {
@@ -65,7 +65,7 @@ interface VisitFormData {
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { token } = useAuth();
+  useAuth();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -211,7 +211,15 @@ const ProjectDetail: React.FC = () => {
                 <span className="px-4 py-2 bg-blue-600 text-white rounded-full">
                   {project.typeStanding || project.type}
                 </span>
-                <span className="px-4 py-2 bg-green-500 text-white rounded-full">
+                <span
+                  className={`px-4 py-2 text-white rounded-full ${
+                    project.etat === "Pret et Ouvert"
+                      ? "bg-green-500"
+                      : project.etat === "En Construction"
+                      ? "bg-orange-500"
+                      : "bg-red-500"
+                  }`}
+                >
                   {project.etat}
                 </span>
               </div>
@@ -299,11 +307,15 @@ const ProjectDetail: React.FC = () => {
                 )}
                 {/* Indicator dots */}
                 <div className="flex justify-center mt-4 gap-2">
-                  {allImages.map((img, index) => (
+                  {allImages.map((_img, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImage(index)}
-                      className={`w-3 h-3 rounded-full border-2 ${currentImage === index ? "bg-blue-600 border-blue-600" : "bg-gray-300 border-gray-400"}`}
+                      className={`w-3 h-3 rounded-full border-2 ${
+                        currentImage === index
+                          ? "bg-blue-600 border-blue-600"
+                          : "bg-gray-300 border-gray-400"
+                      }`}
                       aria-label={`Go to image ${index + 1}`}
                     />
                   ))}
@@ -313,14 +325,17 @@ const ProjectDetail: React.FC = () => {
               {/* Thumbnail Gallery */}
               {allImages.length > 1 && (
                 <div className="mt-8">
-                  <h3 className="text-xl font-bold mb-4">Thumbnails</h3> {/* Optional title */}
-                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2"> {/* Responsive grid */}
+                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
                     {allImages.map((image, index) => (
                       <img
                         key={index}
                         src={image.url}
                         alt={`Thumbnail ${index + 1}`}
-                        className={`w-full h-16 object-cover rounded-md cursor-pointer ${currentImage === index ? 'border-2 border-blue-600' : 'border border-transparent'}`}
+                        className={`w-full h-16 object-cover rounded-md cursor-pointer ${
+                          currentImage === index
+                            ? "border-2 border-blue-600"
+                            : "border border-transparent"
+                        }`}
                         onClick={() => setCurrentImage(index)}
                       />
                     ))}
@@ -336,9 +351,6 @@ const ProjectDetail: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  {/* <h3 className="text-xl font-semibold mb-4">
-                    Caractéristiques
-                  </h3> */}
                   <ul className="space-y-2">
                     <li>
                       <strong>Type de Standing:</strong>{" "}
@@ -355,7 +367,6 @@ const ProjectDetail: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  {/* <h3 className="text-xl font-semibold mb-4">Détails</h3> */}
                   <ul className="space-y-2">
                     <li>
                       <strong>Adresse:</strong> {project.city}
@@ -376,39 +387,38 @@ const ProjectDetail: React.FC = () => {
             <div className="mt-8">
               <h2 className="text-2xl font-bold mb-6">Équipements</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {Object.entries(project.features).map(
-                  ([key, value]) => {
-                    // Map feature keys to their corresponding icons
-                    const featureIcons: { [key: string]: JSX.Element | null } = {
-                      security: <MdSecurity className="w-6 h-6 text-blue-600" />,
-                      gym: <MdSportsGymnastics className="w-6 h-6 text-blue-600" />,
-                      swimmingPool: <MdPool className="w-6 h-6 text-blue-600" />,
-                      playground: <MdChildCare className="w-6 h-6 text-blue-600" />,
-                      restaurant: <MdRestaurant className="w-6 h-6 text-blue-600" />,
-                      cafe: <MdLocalCafe className="w-6 h-6 text-blue-600" />,
-                      mosque: <MdMosque className="w-6 h-6 text-blue-600" />,
-                      shoppingArea: <MdShoppingBag className="w-6 h-6 text-blue-600" />,
-                      greenSpaces: <MdPark className="w-6 h-6 text-blue-600" />,
-                      parking: <MdLocalParking className="w-6 h-6 text-blue-600" />
-                    };
+                {Object.entries(project.features).map(([key, value]) => {
+                  // Map feature keys to their corresponding icons
+                  const featureIcons: { [key: string]: JSX.Element | null } = {
+                    security: <MdSecurity size={24} color="#2563eb" />,
+                    gym: <MdSportsGymnastics size={24} color="#2563eb" />,
+                    swimmingPool: <MdPool size={24} color="#2563eb" />,
+                    playground: <MdChildCare size={24} color="#2563eb" />,
+                    restaurant: <MdRestaurant size={24} color="#2563eb" />,
+                    cafe: <MdLocalCafe size={24} color="#2563eb" />,
+                    mosque: <MdMosque size={24} color="#2563eb" />,
+                    shoppingArea: <MdShoppingBag size={24} color="#2563eb" />,
+                    greenSpaces: <MdPark size={24} color="#2563eb" />,
+                    parking: <MdLocalParking size={24} color="#2563eb" />,
+                  };
 
-                    const icon = featureIcons[key];
+                  const icon = featureIcons[key];
 
-                    return (
-                      value && icon && (
-                        <div key={key} className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                            {/* Render the dynamic icon */}
-                            {icon}
-                          </div>
-                          <span className="text-gray-700">
-                            {key.replace(/([A-Z])/g, " $1").trim()}
-                          </span>
+                  return (
+                    value &&
+                    icon && (
+                      <div key={key} className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                          {/* Render the dynamic icon */}
+                          {icon}
                         </div>
-                      )
-                    );
-                  }
-                )}
+                        <span className="text-gray-700">
+                          {key.replace(/([A-Z])/g, " $1").trim()}
+                        </span>
+                      </div>
+                    )
+                  );
+                })}
               </div>
             </div>
           </div>

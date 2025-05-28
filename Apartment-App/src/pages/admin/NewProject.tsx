@@ -277,10 +277,11 @@ const NewProject: React.FC = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
           },
         }
       );
+
+      console.log("Project created:", response.data);
 
       navigate("/admin/projects");
     } catch (error: any) {
@@ -306,7 +307,11 @@ const NewProject: React.FC = () => {
         <div className="form-card">
           <h1 className="form-title">Create New Project</h1>
           <form onSubmit={handleSubmit}>
-            {error && <div className="form-error">{error}</div>}
+            {error && (
+              <div className="form-error text-center mb-4 p-2 bg-red-100 text-red-700 rounded">
+                {error}
+              </div>
+            )}
 
             <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
               <div style={{ flex: 1 }}>
@@ -500,6 +505,12 @@ const NewProject: React.FC = () => {
                           height: 24,
                           cursor: "pointer",
                           transform: "translate(50%, -50%)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "16px",
+                          lineHeight: 1,
+                          padding: 0,
                         }}
                       >
                         ×
@@ -508,25 +519,6 @@ const NewProject: React.FC = () => {
                   ))}
                 </div>
               )}
-            </div>
-
-            {/* Responsable Selection */}
-            <div style={{ marginBottom: 18 }}>
-              <label className="form-label">Responsable</label>
-              <select
-                name="responsable"
-                value={formData.responsable}
-                onChange={handleChange}
-                required
-                className="form-select"
-              >
-                <option value="">Select a responsable</option>
-                {responsables.map((responsable) => (
-                  <option key={responsable._id} value={responsable._id}>
-                    {responsable.firstName} {responsable.lastName}
-                  </option>
-                ))}
-              </select>
             </div>
 
             {/* Features */}
@@ -563,6 +555,25 @@ const NewProject: React.FC = () => {
               ))}
             </div>
 
+            {/* Responsable Selection */}
+            <div style={{ marginBottom: 18 }}>
+              <label className="form-label">Responsable</label>
+              <select
+                name="responsable"
+                value={formData.responsable}
+                onChange={handleChange}
+                required
+                className="form-select"
+              >
+                <option value="">Select a responsable</option>
+                {responsables.map((responsable) => (
+                  <option key={responsable._id} value={responsable._id}>
+                    {responsable.firstName} {responsable.lastName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="form-actions">
               <button
                 type="button"
@@ -576,11 +587,7 @@ const NewProject: React.FC = () => {
                 disabled={loading || uploadingImages}
                 className="btn"
               >
-                {loading
-                  ? "Creating..."
-                  : uploadingImages
-                  ? "Uploading Images..."
-                  : "Create Project"}
+                {loading ? "Creating..." : "Create Project"}
               </button>
             </div>
           </form>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  FaHome,
   FaBuilding,
   FaCalendarAlt,
   FaSignOutAlt,
@@ -30,7 +29,7 @@ const ResponsableSidebar: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6 space-y-2">
-          <Link
+          {/* <Link
             to="/responsable"
             className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
               isActive("/responsable") && !isActive("/responsable/")
@@ -40,7 +39,7 @@ const ResponsableSidebar: React.FC = () => {
           >
             {/* <FaHome className="w-5 h-5 mr-3" /> */}
             {/* <span>Dashboard</span> */}
-          </Link>
+          {/* </Link> */} 
 
           <Link
             to="/responsable/projects"
@@ -50,8 +49,8 @@ const ResponsableSidebar: React.FC = () => {
                 : "text-gray-400 hover:bg-gray-800 hover:text-white"
             }`}
           >
-            <FaBuilding className="w-5 h-5 mr-3" />
-            <span>Projects</span>
+            <FaBuilding size={20} />
+            <span className="ml-3">Projects</span>
           </Link>
 
           <Link
@@ -62,8 +61,8 @@ const ResponsableSidebar: React.FC = () => {
                 : "text-gray-400 hover:bg-gray-800 hover:text-white"
             }`}
           >
-            <FaCalendarAlt className="w-5 h-5 mr-3" />
-            <span>Visits</span>
+            <FaCalendarAlt size={20} /> 
+            <span className="ml-3">Visits</span>
           </Link>
         </nav>
 
@@ -73,8 +72,8 @@ const ResponsableSidebar: React.FC = () => {
             onClick={handleLogout}
             className="w-full flex items-center justify-center px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
           >
-            <FaSignOutAlt className="w-5 h-5 mr-2" />
-            <span>Logout</span>
+            <FaSignOutAlt size={20} />
+            <span className="ml-3">Logout</span>
           </button>
         </div>
       </div>

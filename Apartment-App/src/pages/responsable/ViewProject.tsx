@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import ResponsableSidebar from "../../components/ResponsableSidebar";
-import { 
+import {
   MdSecurity,
   MdSportsGymnastics,
   MdPool,
@@ -13,7 +13,7 @@ import {
   MdMosque,
   MdShoppingBag,
   MdPark,
-  MdLocalParking
+  MdLocalParking,
 } from "react-icons/md";
 
 interface Project {
@@ -23,7 +23,7 @@ interface Project {
   type: string;
   price: number;
   numberOfApartments: number;
-  status: string;
+  etat: string;
   description: string;
   coverImage: string;
   galleryImages: string[];
@@ -78,12 +78,73 @@ const ViewProject: React.FC = () => {
     fetchProject();
   }, [id, token]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    setError("");
+
+    try {
+      const updatedProject: Partial<Project> = {
+        name: formData.name || "",
+        city: formData.city || "",
+        type: formData.type || "",
+        price: formData.price || 0,
+        numberOfApartments: formData.numberOfApartments || 0,
+        etat: formData.etat || "",
+        description: formData.description || "",
+        features: {
+          parking: formData.features?.parking || false,
+          gym: formData.features?.gym || false,
+          swimmingPool: formData.features?.swimmingPool || false,
+          security: formData.features?.security || false,
+          playground: formData.features?.playground || false,
+          restaurant: formData.features?.restaurant || false,
+          cafe: formData.features?.cafe || false,
+          mosque: formData.features?.mosque || false,
+          shoppingArea: formData.features?.shoppingArea || false,
+          greenSpaces: formData.features?.greenSpaces || false,
+        },
+      };
+
+      const response = await axios.put(
+        `http://localhost:5000/api/projects/${id}`,
+        updatedProject,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.data) {
+        // Update both project and formData with the response data from the PUT request
+        const latestProjectData = response.data;
+        setProject(latestProjectData);
+        setFormData(latestProjectData);
+
+        // Show success message
+        alert("Project updated successfully!");
+
+        // Navigate after successful update and state update
+        navigate("/responsable/projects");
+      }
+    } catch (err) {
+      console.error("Update error:", err);
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data.error || "Failed to update project");
+      } else {
+        setError("Failed to update project");
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
     const { name, value, type } = e.target;
+
     if (type === "checkbox") {
       const checkbox = e.target as HTMLInputElement;
       setFormData((prev) => {
@@ -99,19 +160,18 @@ const ViewProject: React.FC = () => {
           shoppingArea: false,
           greenSpaces: false,
         };
-        const updatedFeatures = {
-          ...currentFeatures,
-          [name]: checkbox.checked,
-        };
         return {
           ...prev,
-          features: updatedFeatures,
+          features: {
+            ...currentFeatures,
+            [name]: checkbox.checked,
+          },
         };
       });
     } else if (type === "number") {
       setFormData((prev) => ({
         ...prev,
-        [name]: parseFloat(value) || 0,
+        [name]: Number(value),
       }));
     } else {
       setFormData((prev) => ({
@@ -120,6 +180,7 @@ const ViewProject: React.FC = () => {
       }));
     }
   };
+
   const handleFeatureChange = (featureName: string) => {
     setFormData((prev) => {
       const currentFeatures = prev.features || {
@@ -138,32 +199,11 @@ const ViewProject: React.FC = () => {
         ...prev,
         features: {
           ...currentFeatures,
-          [featureName]: !(
-            currentFeatures[featureName as keyof typeof currentFeatures] ??
-            false
-          ),
+          [featureName]:
+            !currentFeatures[featureName as keyof typeof currentFeatures],
         },
       };
     });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
-    try {
-      await axios.put(`http://localhost:5000/api/projects/${id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      navigate("/responsable/projects");
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data.error || "Failed to update project");
-      } else {
-        setError("Failed to update project");
-      }
-    } finally {
-      setSaving(false);
-    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -173,11 +213,9 @@ const ViewProject: React.FC = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       <ResponsableSidebar />
-      <div className="flex-1 py-6 px-8" style={{ paddingLeft: '30rem' }}>
+      <div className="flex-1 py-6 px-8" style={{ paddingLeft: "30rem" }}>
         <div className="mb-6 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-gray-900">
-            Edit Project
-          </h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Edit Project</h1>
           <button
             onClick={() => navigate("/responsable/projects")}
             className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -186,7 +224,10 @@ const ViewProject: React.FC = () => {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 mx-auto max-w-lg w-full">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-lg shadow p-6 mx-auto max-w-lg w-full"
+        >
           <div className="p-6 space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div>
@@ -263,8 +304,8 @@ const ViewProject: React.FC = () => {
                   Status
                 </label>
                 <select
-                  name="status"
-                  value={formData.status || ""}
+                  name="etat"
+                  value={formData.etat || ""}
                   onChange={handleChange}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 >
@@ -293,51 +334,44 @@ const ViewProject: React.FC = () => {
                 Features
               </label>
               <div className="grid grid-cols-2 gap-4">
-                {Object.entries(formData.features || {}).map(
-                  ([key, value]) => {
-                    // Map feature keys to their corresponding icons
-                    const featureIcons: { [key: string]: JSX.Element } = {
-                      security: <MdSecurity className="w-5 h-5 text-indigo-600" />,
-                      gym: <MdSportsGymnastics className="w-5 h-5 text-indigo-600" />,
-                      swimmingPool: <MdPool className="w-5 h-5 text-indigo-600" />,
-                      playground: <MdChildCare className="w-5 h-5 text-indigo-600" />,
-                      restaurant: <MdRestaurant className="w-5 h-5 text-indigo-600" />,
-                      cafe: <MdLocalCafe className="w-5 h-5 text-indigo-600" />,
-                      mosque: <MdMosque className="w-5 h-5 text-indigo-600" />,
-                      shoppingArea: <MdShoppingBag className="w-5 h-5 text-indigo-600" />,
-                      greenSpaces: <MdPark className="w-5 h-5 text-indigo-600" />,
-                      parking: <MdLocalParking className="w-5 h-5 text-indigo-600" />
-                    };
+                {Object.entries(formData.features || {}).map(([key, value]) => {
+                  // Map feature keys to their corresponding icons
+                  const featureIcons: { [key: string]: JSX.Element } = {
+                    security: <MdSecurity size={20} color="#4F46E5" />,
+                    gym: <MdSportsGymnastics size={20} color="#4F46E5" />,
+                    swimmingPool: <MdPool size={20} color="#4F46E5" />,
+                    playground: <MdChildCare size={20} color="#4F46E5" />,
+                    restaurant: <MdRestaurant size={20} color="#4F46E5" />,
+                    cafe: <MdLocalCafe size={20} color="#4F46E5" />,
+                    mosque: <MdMosque size={20} color="#4F46E5" />,
+                    shoppingArea: <MdShoppingBag size={20} color="#4F46E5" />,
+                    greenSpaces: <MdPark size={20} color="#4F46E5" />,
+                    parking: <MdLocalParking size={20} color="#4F46E5" />,
+                  };
 
-                    return (
-                      <div key={key} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          id={key}
-                          checked={value}
-                          onChange={() => handleFeatureChange(key)}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                        />
-                        <div className="flex items-center space-x-2">
-                          {featureIcons[key]}
-                          <label
-                            htmlFor={key}
-                            className="text-sm text-gray-700"
-                          >
-                            {key.replace(/([A-Z])/g, " $1").trim()}
-                          </label>
-                        </div>
+                  return (
+                    <div key={key} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id={key}
+                        checked={value}
+                        onChange={() => handleFeatureChange(key)}
+                        className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                      />
+                      <div className="flex items-center space-x-2">
+                        {featureIcons[key]}
+                        <label htmlFor={key} className="text-sm text-gray-700">
+                          {key.replace(/([A-Z])/g, " $1").trim()}
+                        </label>
                       </div>
-                    );
-                  }
-                )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             {error && (
-              <div className="text-red-600 bg-red-50 p-3 rounded">
-                {error}
-              </div>
+              <div className="text-red-600 bg-red-50 p-3 rounded">{error}</div>
             )}
 
             <div className="flex justify-end space-x-3">

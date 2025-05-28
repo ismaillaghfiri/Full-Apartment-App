@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaBuilding, FaCalendarAlt } from "react-icons/fa";
 
 interface ResponsableLayoutProps {
   children: React.ReactNode;
@@ -18,8 +17,8 @@ const ResponsableLayout: React.FC<ResponsableLayoutProps> = ({ children }) => {
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-lg">
         <div className="p-6">
-          <h2 className="text-2xl font-semibold text-gray-800">Dashboard</h2>
-          <p className="text-sm text-gray-600 mt-1">Responsable Panel</p>
+          {/* <h2 className="text-2xl font-semibold text-gray-800">Dashboard</h2> */}
+          {/* <p className="text-sm text-gray-600 mt-1">Responsable Panel</p> */}
         </div>
         <nav className="mt-4">
           <Link
@@ -30,7 +29,7 @@ const ResponsableLayout: React.FC<ResponsableLayoutProps> = ({ children }) => {
                 : ""
             }`}
           >
-            <FaBuilding className="w-5 h-5 mr-3" />
+            {/* <FaBuilding size={20} style={{ marginRight: '0.75rem' }} /> */}
             <span>Projects</span>
           </Link>
           <Link
@@ -39,7 +38,7 @@ const ResponsableLayout: React.FC<ResponsableLayoutProps> = ({ children }) => {
               isActive("/responsable/visits") ? "bg-blue-50 text-blue-700" : ""
             }`}
           >
-            <FaCalendarAlt className="w-5 h-5 mr-3" />
+            {/* <FaCalendarAlt size={20} className="mr-3" /> */}
             <span>Visits</span>
           </Link>
         </nav>

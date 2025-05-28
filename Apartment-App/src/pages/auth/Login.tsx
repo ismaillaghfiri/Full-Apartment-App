@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const Login: React.FC = () => {
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
     try {
       const { role } = await login(formData.username, formData.password);
 
-      // Navigate based on user role
+      
       switch (role) {
         case "admin":
           navigate("/admin");
@@ -84,6 +84,9 @@ const Login: React.FC = () => {
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
               />
+            </div>
+            <div className="flex justify-center">
+              <h3>you don't have an account? <Link to="/register">Register</Link></h3>
             </div>
           </div>
 

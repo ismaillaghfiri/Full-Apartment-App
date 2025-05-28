@@ -2,18 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
-import {
-  FaCalendar,
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaBuilding,
-  FaPlus,
-  FaEdit,
-  FaTrash,
-  FaCheck,
-  FaTimes,
-} from "react-icons/fa";
 import ResponsableSidebar from "../../components/ResponsableSidebar";
 
 interface Visit {
