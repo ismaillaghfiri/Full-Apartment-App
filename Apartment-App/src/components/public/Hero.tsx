@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import heroImage from "../../assets/images/herosection-bg.jpg";
-// import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -25,9 +25,12 @@ const Hero = () => {
               <br />
               at the right price
             </h1>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition duration-300">
+            <Link
+              to="/projects"
+              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors"
+            >
               Discover More
-            </button>
+            </Link>
           </div>
         </div>
       </div>
