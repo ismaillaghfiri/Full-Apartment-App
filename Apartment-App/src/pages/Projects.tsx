@@ -191,14 +191,7 @@
 //                   <label className="block text-sm font-medium text-gray-700 mb-1">
 //                     Type
 //                   </label>
-//                   <select
-//                     value={type}
-//                     onChange={(e) => setType(e.target.value)}
-//                     className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-//                   >
-//                     <option value="">All Types</option>
-//                     <option value="economic">Economic</option>
-//                     <option value="medium">Medium Standing</option>
+
 //                     <option value="high">High Standing</option>
 //                   </select>
 //                 </div>
